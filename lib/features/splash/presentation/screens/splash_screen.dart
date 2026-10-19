@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../core/constants/app_assets.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_spacing.dart';
 import '../../../../core/constants/app_strings.dart';
@@ -8,7 +9,6 @@ import '../../../../core/router/app_routes.dart';
 import '../../../auth/presentation/bloc/auth_bloc.dart';
 import '../../../auth/presentation/bloc/auth_event.dart';
 import '../widgets/deen_step_logo.dart';
-import '../widgets/mosque_silhouette_painter.dart';
 import '../widgets/star_field_painter.dart';
 
 /// Progressive Splash Screen accurately matching the 4-frame Figma sequence.
@@ -43,15 +43,13 @@ class _SplashScreenState extends State<SplashScreen>
     );
 
     // Frames 2 & 3: Mosque silhouette rises from the bottom
-    _mosqueSlideAnimation = Tween<Offset>(
-      begin: const Offset(0.0, 0.45),
-      end: Offset.zero,
-    ).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: const Interval(0.25, 0.80, curve: Curves.easeOutCubic),
-      ),
-    );
+    _mosqueSlideAnimation =
+        Tween<Offset>(begin: const Offset(0.0, 0.45), end: Offset.zero).animate(
+          CurvedAnimation(
+            parent: _controller,
+            curve: const Interval(0.25, 0.80, curve: Curves.easeOutCubic),
+          ),
+        );
 
     // Frame 4: Buttons fade & slide up into place
     _buttonsFadeAnimation = CurvedAnimation(
@@ -59,15 +57,13 @@ class _SplashScreenState extends State<SplashScreen>
       curve: const Interval(0.60, 1.0, curve: Curves.easeIn),
     );
 
-    _buttonsSlideAnimation = Tween<Offset>(
-      begin: const Offset(0.0, 0.25),
-      end: Offset.zero,
-    ).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: const Interval(0.60, 1.0, curve: Curves.easeOut),
-      ),
-    );
+    _buttonsSlideAnimation =
+        Tween<Offset>(begin: const Offset(0.0, 0.25), end: Offset.zero).animate(
+          CurvedAnimation(
+            parent: _controller,
+            curve: const Interval(0.60, 1.0, curve: Curves.easeOut),
+          ),
+        );
 
     _controller.forward();
   }
@@ -101,22 +97,21 @@ class _SplashScreenState extends State<SplashScreen>
         children: [
           // 1. Subtle Celestial Star Specks in Night Sky
           const Positioned.fill(
-            child: CustomPaint(
-              painter: StarFieldPainter(),
-            ),
+            child: CustomPaint(painter: StarFieldPainter()),
           ),
 
-          // 2. Rising Mosque Silhouette at Bottom
+          // 2. Rising Mosque Silhouette Image at Bottom (matching exact Figma asset)
           Positioned(
             left: 0,
             right: 0,
             bottom: 0,
-            height: size.height * 0.42,
             child: SlideTransition(
               position: _mosqueSlideAnimation,
-              child: CustomPaint(
-                size: Size(size.width, size.height * 0.42),
-                painter: MosqueSilhouettePainter(),
+              child: Image.asset(
+                AppAssets.mosqueSilhouette,
+                width: size.width,
+                fit: BoxFit.fitWidth,
+                alignment: Alignment.bottomCenter,
               ),
             ),
           ),
@@ -128,7 +123,9 @@ class _SplashScreenState extends State<SplashScreen>
               child: FadeTransition(
                 opacity: _logoFadeAnimation,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xxxl),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.xxxl,
+                  ),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -149,14 +146,17 @@ class _SplashScreenState extends State<SplashScreen>
                       const SizedBox(height: AppSpacing.sm),
 
                       // Tagline text matching Figma exact copy
-                      const Text(
-                        AppStrings.splashTagline,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 13.5,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.textMuted,
-                          height: 1.45,
+                      SizedBox(
+                        width: size.width * 0.7,
+                        child: const Text(
+                          AppStrings.splashTagline,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 13.5,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.textMuted,
+                            height: 1.45,
+                          ),
                         ),
                       ),
                     ],
@@ -189,7 +189,9 @@ class _SplashScreenState extends State<SplashScreen>
                           foregroundColor: const Color(0xFF111814),
                           elevation: 0,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(AppSpacing.radiusXl),
+                            borderRadius: BorderRadius.circular(
+                              AppSpacing.radiusLg,
+                            ),
                           ),
                           textStyle: const TextStyle(
                             fontSize: 16,
@@ -211,12 +213,11 @@ class _SplashScreenState extends State<SplashScreen>
                           backgroundColor: AppColors.darkButtonBg,
                           foregroundColor: Colors.white,
                           elevation: 0,
-                          side: const BorderSide(
-                            color: AppColors.darkButtonBorder,
-                            width: 1.2,
-                          ),
+                          side: BorderSide.none,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(AppSpacing.radiusXl),
+                            borderRadius: BorderRadius.circular(
+                              AppSpacing.radiusLg,
+                            ),
                           ),
                           textStyle: const TextStyle(
                             fontSize: 15,

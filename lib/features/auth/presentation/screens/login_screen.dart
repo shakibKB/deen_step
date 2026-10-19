@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_spacing.dart';
 import '../../../../core/router/app_routes.dart';
@@ -37,11 +38,11 @@ class _LoginScreenState extends State<LoginScreen> {
   void _onLogIn() {
     if (!_isFormValid) return;
     context.read<AuthBloc>().add(
-          AuthLoginSubmitted(
-            email: _emailController.text.trim(),
-            password: _passwordController.text,
-          ),
-        );
+      AuthLoginSubmitted(
+        email: _emailController.text.trim(),
+        password: _passwordController.text,
+      ),
+    );
   }
 
   @override
@@ -79,25 +80,27 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(height: AppSpacing.xxl),
 
                   // Header Title
-                  const Text(
+                  Text(
                     'Welcome Back',
-                    style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.w800,
+                    style: GoogleFonts.poppins(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
                       color: Colors.white,
-                      letterSpacing: -0.3,
                     ),
                   ),
                   const SizedBox(height: 6),
 
                   // Subtitle
-                  const Text(
-                    'Enter your details to access your Deen-step habits.',
-                    style: TextStyle(
-                      fontSize: 13.5,
-                      fontWeight: FontWeight.w400,
-                      color: AppColors.textMuted,
-                      height: 1.4,
+                  SizedBox(
+                    width: 320,
+                    child: Text(
+                      'Enter your details to access your Deen-step habits.',
+                      style: GoogleFonts.poppins(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.textMuted,
+                        height: 1.4,
+                      ),
                     ),
                   ),
                   const SizedBox(height: AppSpacing.xxxl),
@@ -174,7 +177,14 @@ class _LoginScreenState extends State<LoginScreen> {
                                 color: Color(0xFF111814),
                               ),
                             )
-                          : const Text('Log In'),
+                          : Text(
+                              'Log In',
+                              style: GoogleFonts.poppins(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFF111827),
+                              ),
+                            ),
                     ),
                   ),
                   const SizedBox(height: AppSpacing.xl),
@@ -211,7 +221,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   // Social Log In Section (Google & Apple)
                   SocialLoginSection(
                     onGoogleTap: () {
-                      context.read<AuthBloc>().add(const AuthGuestLoginRequested());
+                      context.read<AuthBloc>().add(
+                        const AuthGuestLoginRequested(),
+                      );
                       context.go(AppRoutes.home);
                     },
                   ),

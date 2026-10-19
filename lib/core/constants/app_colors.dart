@@ -12,11 +12,20 @@ abstract final class AppColors {
   static const Color buttonDisabledText = Color(0xFF6A7F36);
   static const Color inputBackground = Color(0xFF181C19);
   static const Color inputBorder = Color(0xFF232B25);
-  static const Color inputHint = Color(0xFF5D6861);
-  static const Color darkButtonBg = Color(0xFF16211A);
+  static const Color inputHint = Color(0xFF6B7280);
+  static const Color darkButtonBg = Color(0xFF060B09);
   static const Color darkButtonBorder = Color(0xFF223127);
   static const Color mosqueSilhouette = Color(0xFF132219);
   static const Color textMuted = Color(0xFF8E9B93);
+
+  // Home Screen Palette
+  static const Color homeBackground = Color(0xFF0B130E);
+  static const Color homeCardBg = Color(0xFF121D17);
+  static const Color homeCardBorder = Color(0xFF1C2C22);
+  static const Color homeCardHover = Color(0xFF17251E);
+  static const Color textMutedGreen = Color(0xFF8E9E94);
+  static const Color textDarkMuted = Color(0xFF6F7E77);
+  static const Color streakGold = Color(0xFFF7D145);
 
   // Primary Emerald Greens
   static const Color primary = Color(0xFF0D5C3A);

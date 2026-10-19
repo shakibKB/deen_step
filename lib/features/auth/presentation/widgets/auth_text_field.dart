@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_spacing.dart';
 
@@ -31,37 +32,45 @@ class _AuthTextFieldState extends State<AuthTextField> {
   @override
   Widget build(BuildContext context) {
     final hasText = widget.controller.text.isNotEmpty;
+    final isActive = _isFocused || hasText;
+    final showTitle = _isFocused || hasText;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Label above field (shown when filled or focused, matching Figma)
-        if (hasText || _isFocused) ...[
-          Text(
-            widget.label,
-            style: const TextStyle(
-              fontSize: 12.5,
-              fontWeight: FontWeight.w600,
-              color: Colors.white,
+    // Default: fillColor: 1A1A1A, border: 0F0F0F
+    // When selected/typing: transparent (background color) with visible border line
+    final fillColor = isActive ? Colors.transparent : const Color(0xFF1A1A1A);
+    final borderColor = isActive
+        ? const Color(0xFF2C2E2D)
+        : const Color(0xFF0F0F0F);
+
+    return Focus(
+      onFocusChange: (focused) {
+        setState(() {
+          _isFocused = focused;
+        });
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // Title label above field (shows when selected or has text)
+          if (showTitle) ...[
+            Text(
+              widget.label,
+              style: GoogleFonts.poppins(
+                fontSize: 12.5,
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
+              ),
             ),
-          ),
-          const SizedBox(height: 6),
-        ],
-        Focus(
-          onFocusChange: (focused) {
-            setState(() {
-              _isFocused = focused;
-            });
-          },
-          child: Container(
+            const SizedBox(height: 6),
+          ],
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 150),
             height: 54,
             decoration: BoxDecoration(
-              color: AppColors.inputBackground,
+              color: fillColor,
               borderRadius: BorderRadius.circular(AppSpacing.radiusMd),
-              border: Border.all(
-                color: _isFocused ? AppColors.brandLime : AppColors.inputBorder,
-                width: _isFocused ? 1.5 : 1.2,
-              ),
+              border: Border.all(color: borderColor, width: 1.2),
             ),
             padding: const EdgeInsets.symmetric(horizontal: 16),
             alignment: Alignment.center,
@@ -69,19 +78,21 @@ class _AuthTextFieldState extends State<AuthTextField> {
               controller: widget.controller,
               obscureText: widget.isPassword && _obscureText,
               keyboardType: widget.keyboardType,
-              style: const TextStyle(
+              style: GoogleFonts.poppins(
                 color: Colors.white,
                 fontSize: 14.5,
-                fontWeight: FontWeight.w500,
+                fontWeight: FontWeight.w400,
               ),
-              cursorColor: AppColors.brandLime,
+              cursorColor: Colors.white,
               onChanged: (val) {
                 setState(() {});
                 widget.onChanged?.call(val);
               },
               decoration: InputDecoration(
-                hintText: (hasText || _isFocused) ? '' : (widget.hintText ?? widget.label),
-                hintStyle: const TextStyle(
+                fillColor: fillColor,
+                filled: true,
+                hintText: showTitle ? '' : (widget.hintText ?? widget.label),
+                hintStyle: GoogleFonts.poppins(
                   color: AppColors.inputHint,
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
@@ -102,7 +113,7 @@ class _AuthTextFieldState extends State<AuthTextField> {
                           _obscureText
                               ? Icons.visibility_outlined
                               : Icons.visibility_off_outlined,
-                          color: const Color(0xFF6B7A72),
+                          color: Color(0xFF6B7280),
                           size: 20,
                         ),
                       )
@@ -114,8 +125,8 @@ class _AuthTextFieldState extends State<AuthTextField> {
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

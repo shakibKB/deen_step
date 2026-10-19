@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_spacing.dart';
 import '../../../../core/router/app_routes.dart';
@@ -45,13 +46,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
   void _onRegister() {
     if (!_isFormValid) return;
     context.read<AuthBloc>().add(
-          AuthSignUpSubmitted(
-            fullName: _fullNameController.text.trim(),
-            email: _emailController.text.trim(),
-            password: _passwordController.text,
-            confirmPassword: _confirmPasswordController.text,
-          ),
-        );
+      AuthSignUpSubmitted(
+        fullName: _fullNameController.text.trim(),
+        email: _emailController.text.trim(),
+        password: _passwordController.text,
+        confirmPassword: _confirmPasswordController.text,
+      ),
+    );
   }
 
   @override
@@ -89,13 +90,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   const SizedBox(height: AppSpacing.xxl),
 
                   // Title
-                  const Text(
+                  Text(
                     'Create Account',
-                    style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.w800,
+                    style: GoogleFonts.poppins(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
                       color: Colors.white,
-                      letterSpacing: -0.3,
                     ),
                   ),
                   const SizedBox(height: 6),
@@ -260,7 +260,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 color: Color(0xFF111814),
                               ),
                             )
-                          : const Text('Register Account'),
+                          : Text(
+                              'Register Account',
+                              style: GoogleFonts.poppins(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFF111827),
+                              ),
+                            ),
                     ),
                   ),
                   const SizedBox(height: AppSpacing.xl),
@@ -297,7 +304,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   // Social Registration Section
                   SocialLoginSection(
                     onGoogleTap: () {
-                      context.read<AuthBloc>().add(const AuthGuestLoginRequested());
+                      context.read<AuthBloc>().add(
+                        const AuthGuestLoginRequested(),
+                      );
                       context.go(AppRoutes.home);
                     },
                   ),

@@ -13,12 +13,9 @@ class AuthBackButton extends StatelessWidget {
         height: 44,
         width: 44,
         decoration: BoxDecoration(
-          color: const Color(0xFF1B201C),
+          color: const Color(0xFF1A1A1A),
           shape: BoxShape.circle,
-          border: Border.all(
-            color: const Color(0xFF262E28),
-            width: 1.2,
-          ),
+          border: Border.all(color: const Color(0xFF020617), width: 1.2),
         ),
         child: const Center(
           child: Icon(

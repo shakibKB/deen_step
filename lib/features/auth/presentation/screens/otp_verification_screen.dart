@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_spacing.dart';
 import '../../../../core/router/app_routes.dart';
@@ -14,18 +15,17 @@ import '../widgets/auth_back_button.dart';
 class OtpVerificationScreen extends StatefulWidget {
   final String email;
 
-  const OtpVerificationScreen({
-    super.key,
-    required this.email,
-  });
+  const OtpVerificationScreen({super.key, required this.email});
 
   @override
   State<OtpVerificationScreen> createState() => _OtpVerificationScreenState();
 }
 
 class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
-  final List<TextEditingController> _controllers =
-      List.generate(4, (_) => TextEditingController());
+  final List<TextEditingController> _controllers = List.generate(
+    4,
+    (_) => TextEditingController(),
+  );
   final List<FocusNode> _focusNodes = List.generate(4, (_) => FocusNode());
 
   int _resendCountdown = 30;
@@ -71,11 +71,8 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   void _onVerify() {
     if (!_isComplete) return;
     context.read<AuthBloc>().add(
-          AuthOtpVerifySubmitted(
-            email: widget.email,
-            otp: _otpCode,
-          ),
-        );
+      AuthOtpVerifySubmitted(email: widget.email, otp: _otpCode),
+    );
   }
 
   @override
@@ -113,13 +110,12 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                   const SizedBox(height: AppSpacing.xxl),
 
                   // Title
-                  const Text(
+                  Text(
                     'Verify Email',
-                    style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.w800,
+                    style: GoogleFonts.poppins(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
                       color: Colors.white,
-                      letterSpacing: -0.3,
                     ),
                   ),
                   const SizedBox(height: 6),
@@ -166,8 +162,8 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                             color: hasFocus
                                 ? AppColors.brandLime
                                 : (hasValue
-                                    ? const Color(0xFF38433C)
-                                    : AppColors.inputBorder),
+                                      ? const Color(0xFF38433C)
+                                      : AppColors.inputBorder),
                             width: hasFocus ? 1.5 : 1.2,
                           ),
                         ),
